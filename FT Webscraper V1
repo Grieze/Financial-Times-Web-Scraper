@@ -1,0 +1,29 @@
+from bs4 import BeautifulSoup
+import requests
+
+website = 'https://www.reuters.com/finance/deals/mergers'
+source = requests.get(website).text
+soup = BeautifulSoup(source, 'lxml')
+
+
+
+for article in soup.find_all('article'):
+### so far this for loop keeps going until it hits the "next page"
+### link at which point the loop stops and terminates due to error
+
+    headline = article.div.a.h3.text.strip() #threw in strip() to fix the issue of
+    #a bunch of space being printed before the headline title. 
+    print(headline+ "\n")
+
+    summary = article.find("div", class_="story-content").p.text
+    print(summary + "\n") #"\n" is python's equivalent to C++'s endl;
+
+
+    link = article.find('div', class_='story-content').a['href']
+    #this bit [href] is the syntax needed for me to pull out the URL from the html code
+    origin = "https://www.reuters.com/finance/deals/mergers"
+    print(origin + link + "\n")
+
+    next_page = soup.find('a', class_='control-nav-next')["href"]
+    if headline or summary or link == None:
+        print(next_page)
