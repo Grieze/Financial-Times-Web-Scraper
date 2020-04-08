@@ -52,7 +52,7 @@ def scrape_next_page_function(soup2):
         link = article.find('div', class_='story-content').a['href']
         #this bit [href] is the syntax needed for me to pull out the URL from the html code
         origin = "https://www.reuters.com/finance/deals/mergers"
-        weblink = origin + link2
+        weblink = origin + link
         with open('ReutersData.csv', 'a', newline='') as csvfile:
             ReutersWriter = csv.writer(csvfile, delimiter=',')
             ReutersWriter.writerow([headline] + [date] + [summary] + [weblink])
